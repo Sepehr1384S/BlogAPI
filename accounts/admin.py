@@ -8,8 +8,24 @@ class CustomerUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ['email', 'username', 'name', 'is_staff',]
-    fieldsets = UserAdmin.fieldsets + ((None, {'fields': ('name',)}),)
-    add_fieldsets = UserAdmin.add_fieldsets + ((None, {'fields': ('name',)}),)
+
+    list_display = ("email", "username", "name", "is_staff")
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        ("Personal Info", {"fields": ("username", "name")}),
+        ("Permissions", {"fields": ("is_staff", "is_active", "is_superuser")}),
+        ("Groups", {"fields": ("groups", "user_permissions")}),
+    )
+
+    add_fieldsets = (
+        (None, {
+            "classes": ("wide",),
+            "fields": ("email", "username", "name", "password1", "password2"),
+        }),
+    )
+
+    search_fields = ("email", "username")
+    ordering = ("email",)
+
 
 admin.site.register(CustomUser, CustomerUserAdmin)

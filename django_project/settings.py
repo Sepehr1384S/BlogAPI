@@ -1,6 +1,11 @@
 from pathlib import Path
-
 from django.conf.global_settings import EMAIL_BACKEND
+from drf_spectacular.settings import SPECTACULAR_DEFAULTS
+from environs import Env
+
+
+env = Env()
+env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,6 +32,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'drf_spectacular',
     # local
     'accounts.apps.AccountsConfig',
     'posts.apps.PostsConfig',
@@ -40,6 +46,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 MIDDLEWARE = [
@@ -121,3 +128,9 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Blog API Project',
+    'DESCRIPTION': 'A sample blog to learn about DRF',
+    'VERSION': '1.0.0',
+}

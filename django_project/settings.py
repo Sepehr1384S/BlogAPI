@@ -15,7 +15,13 @@ SECRET_KEY = env.str('SECRET_KEY')
 
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    "blogapi-xmm9.onrender.com",
+    ".onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -91,8 +97,12 @@ SITE_ID = 1
 WSGI_APPLICATION = 'django_project.wsgi.application'
 
 DATABASES = {
-    'default': env.dj_db_url('DATABASE_URL')
+    "default": env.dj_db_url(
+        "DATABASE_URL",
+        default="sqlite:///db.sqlite3"
+    )
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
